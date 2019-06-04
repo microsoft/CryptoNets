@@ -48,14 +48,14 @@ Use the instructions in [https://github.com/microsoft/SEAL/blob/master/dotnet/nu
 * Open the CryptoNets solution using Visual Studio and compile the project. Make sure to target x64 and use either Release or Debug mode.
 
 ### 3. Prepare data files
-* Change Directory to the .\bin\x64\Release or .\bin\x64\Debug directory (depending on the choice of build you used)
-* Use DataPreprocess.exe to obtain and prepare the datasets you are interested in. For each of the datests (MNIST/CIFAR/CAL) issue the command *DataPreprocess.exe dataset-name*. Instructions on where to download the data from will be displayed. After downloading the data to the local directory issue the command *DataPreprocess.exe dataset-name* again to preprocess the data
+* Change Directory to the .\bin\x64\Release or .\bin\x64\Debug directory (depending on the choice of build you used).
+* Use DataPreprocess.exe to obtain and prepare the datasets you are interested in. For each of the datests (MNIST/CIFAR/CAL) issue the command *DataPreprocess.exe dataset-name*. Instructions on where to download the data from will be displayed. After downloading the data to the local directory issue the command *DataPreprocess.exe dataset-name* again to preprocess the data.
 
 # Running
 After downloading and preparing the data you can test the different applications. Note that if you build the code in Debug mode more information may be displayed. 
 Here we demonstrate the outputs for Release mode.
 ### Basic Examples
-This project does not require any data. issue the command *BasicExample.exe* which will generate output similar to
+This project does not require any data. Issue the command *BasicExample.exe* which will generate output similar to
 ```
 Generated keys in 0.4218858 seconds
 Norm Sqared is:
@@ -78,7 +78,7 @@ Compute in 0.203117 seconds
 
 ### CryptoNets
 This project requires the MNIST data. It implements the [CryptoNets](http://proceedings.mlr.press/v48/gilad-bachrach16.pdf) but with SEAL 3.2 as opposed to SEAL 1.0 that was used in the original paper.
-To run issue the command *.\CryptoNets.exe*. The expected output is 
+To run, issue the command *.\CryptoNets.exe*. The expected output is 
 ```
 Preparing
 Layer EncryptLayer computed in 2.2655761 seconds (08:33:37.085 -- 08:33:39.351) layer width (8192,784)
@@ -105,7 +105,7 @@ errs 11/900 accuracy 98.778% prediction 8 label 8
 ```
 
 ### LowLatencyCryptoNets
-This project implements different [LoLa](https://arxiv.org/abs/1812.10659) versions on MNIST. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2 so the expected performance is slightly better.
+This project implements different [LoLa](https://arxiv.org/abs/1812.10659) versions on MNIST. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2, so the expected performance is slightly better.
 To run this project use the command *.\LowLatencyCryptoNets* with the following parameters:
 
 > -v, --verbose    (Default: false) Set output to verbose messages. In the verbose mode more information is presented
@@ -133,8 +133,8 @@ errs 0/10 accuracy 100.000% Prediction-Time 2014.07 prediction 9 label 9
 
 
 ### CifarCryptoNets
-This project implements [LoLa](https://arxiv.org/abs/1812.10659) on the CIFAR dataset. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2 so the expected performance is slightly better.
-To run issue the command *.\CifarCryptoNets.exe*. Note that this network is much slower and may take several minuts to complete running on a single example. The expected output is 
+This project implements [LoLa](https://arxiv.org/abs/1812.10659) on the CIFAR dataset. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2, so the expected performance is slightly better.
+To run, issue the command *.\CifarCryptoNets.exe*. Note that this network is much slower and may take several minutes to complete running on a single example. The expected output is: 
 
 ```
 Generating encryption keys 6/4/2019 8:39:25 AM
@@ -154,8 +154,8 @@ Max computed value 0 (-∞)
 ```
 
 ### Caltech101
-This project implements [LoLa](https://arxiv.org/abs/1812.10659) on the CalTech-101 dataset. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2 so the expected performance is slightly better.
-To run issue the command *.\Caltech101.exe*. The expected output is 
+This project implements [LoLa](https://arxiv.org/abs/1812.10659) on the CalTech-101 dataset. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2, so the expected performance is slightly better.
+To run, issue the command *.\Caltech101.exe*. The expected output is: 
 
 ```
 Time for Prediction+Encryption: 234.295
