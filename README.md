@@ -21,7 +21,14 @@ as well as versions of LoLa that operate on the [CIFAR-10](https://www.cs.toront
 performing computations that are not necessarily Neural-Networks.
 
 When using this project in a scientific paper, please cite the paper [Low Latency Privacy Preserving Inference](https://arxiv.org/abs/1812.10659).
-
+```latex
+@inproceedings{Brutzkus2019LowLatency,
+  title={Low Latency Privacy Preserving Inference},
+  author={Brutzkus, Alon and Elisha, Oren and Gilad-Bachrach, Ran},
+  booktitle={International Conference on Machine Learning},
+  year={2019}
+}
+```
 
 
 
