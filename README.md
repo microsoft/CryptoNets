@@ -56,82 +56,53 @@ After downloading and preparing the data you can test the different applications
 Here we demonstrate the outputs for Release mode.
 ### Basic Examples
 This project does not require any data. issue the command *BasicExample.exe* which will generate output similar to
+```
+Generated keys in 0.4218858 seconds
+Norm Sqared is:
+DenseVector 1-Double
+14
 
->Generated keys in 0.3499891 seconds
+sum of elements in a vector:
+DenseVector 1-Double
+6
 
->Norm Sqared is:
+elementwise multiply =
+DenseVector 3-Double
+ -1
+ 10
+-12
 
-
->DenseVector 1-Double
-
->14
-
->
-
->sum of elements in a vector:
-
->DenseVector 1-Double
-
->6
-
->
-
->elementwise multiply =
-
->DenseVector 3-Double
-
-> -1
-
-> 10
-
->-12
-
->
-
->Compute in 0.1740085 seconds
+Compute in 0.203117 seconds
+```
 
 
 ### CryptoNets
 This project requires the MNIST data. It implements the [CryptoNets](http://proceedings.mlr.press/v48/gilad-bachrach16.pdf) but with SEAL 3.2 as opposed to SEAL 1.0 that was used in the original paper.
 To run issue the command *.\CryptoNets.exe*. The expected output is 
-
-> Preparing
-
-> Layer EncryptLayer computed in 2.345007 seconds (12:26:54.220 -- 12:26:56.565) layer width (8192,784)
-
-> Layer TimingLayer computed in 0.0070022 seconds (12:26:56.566 -- 12:26:56.573) layer width (8192,784)
-
-> Pool (no-bias) layer with 5 maps and 169 locations (total size 845) kernel size 26
-
-> Layer PoolLayer computed in 5.446986 seconds (12:26:56.574 -- 12:27:02.021) layer width (8192,784)
-
-> Layer SquareActivation computed in 9.9859997 seconds (12:27:02.022 -- 12:27:12.008) layer width (8192,845)
-
-> Pool (bias) layer with 100 maps and 1 locations (total size 100) kernel size 845
-
-> Layer PoolLayer computed in 9.9470054 seconds (12:27:12.009 -- 12:27:21.956) layer width (8192,845)
-
-> Layer SquareActivation computed in 1.1890023 seconds (12:27:21.957 -- 12:27:23.146) layer width (8192,100)
-
-> Pool (bias) layer with 10 maps and 1 locations (total size 10) kernel size 100
-
-> Layer PoolLayer computed in 0.2120094 seconds (12:27:23.147 -- 12:27:23.359) layer width (8192,100)
-
-> Layer TimingLayer computed in 0.0060036 seconds (12:27:23.359 -- 12:27:23.365) layer width (8192,10)
-
-> errs 0/100 accuracy 100.000% prediction 9 label 9
-
-> errs 2/200 accuracy 99.000% prediction 2 label 2
-
-> errs 3/300 accuracy 99.000% prediction 8 label 8
-
-> errs 3/400 accuracy 99.250% prediction 4 label 4
-
-> errs 5/500 accuracy 99.000% prediction 6 label 6
-
-> errs 7/600 accuracy 98.833% prediction 9 label 9
-
-> ...
+```
+Preparing
+Layer EncryptLayer computed in 2.2655761 seconds (08:33:37.085 -- 08:33:39.351) layer width (8192,784)
+Layer TimingLayer computed in 0.015603 seconds (08:33:39.351 -- 08:33:39.366) layer width (8192,784)
+Pool (no-bias) layer with 5 maps and 169 locations (total size 845) kernel size 26
+Layer PoolLayer computed in 5.156229 seconds (08:33:39.366 -- 08:33:44.523) layer width (8192,784)
+Layer SquareActivation computed in 9.7500237 seconds (08:33:44.523 -- 08:33:54.273) layer width (8192,845)
+Pool (bias) layer with 100 maps and 1 locations (total size 100) kernel size 845
+Layer PoolLayer computed in 9.3281011 seconds (08:33:54.273 -- 08:34:03.601) layer width (8192,845)
+Layer SquareActivation computed in 1.1562609 seconds (08:34:03.601 -- 08:34:04.757) layer width (8192,100)
+Pool (bias) layer with 10 maps and 1 locations (total size 10) kernel size 100
+Layer PoolLayer computed in 0.1875013 seconds (08:34:04.757 -- 08:34:04.944) layer width (8192,100)
+Layer TimingLayer computed in 0 seconds (08:34:04.944 -- 08:34:04.944) layer width (8192,10)
+errs 0/100 accuracy 100.000% prediction 9 label 9
+errs 2/200 accuracy 99.000% prediction 2 label 2
+errs 3/300 accuracy 99.000% prediction 8 label 8
+errs 3/400 accuracy 99.250% prediction 4 label 4
+errs 5/500 accuracy 99.000% prediction 6 label 6
+errs 7/600 accuracy 98.833% prediction 9 label 9
+errs 10/700 accuracy 98.571% prediction 3 label 3
+errs 10/800 accuracy 98.750% prediction 2 label 2
+errs 11/900 accuracy 98.778% prediction 8 label 8
+...
+```
 
 ### LowLatencyCryptoNets
 This project implements different [LoLa](https://arxiv.org/abs/1812.10659) versions on MNIST. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2 so the expected performance is slightly better.
@@ -144,71 +115,71 @@ To run this project use the command *.\LowLatencyCryptoNets* with the following 
 > -n, --network    Required. Type of network to use (LoLa, LoLaDense, LoLaSmall, LoLaLarge)
 
 For example, the command *.\LowLatencyCryptoNets -n LoLa -e* will generate the following output:
-
->LoLa mode
-
->Generating keys in 1.8929779 seconds
-
->errs 0/1 accuracy 100.000% Prediction-Time 2140.01 prediction 7 label 7
-
->errs 0/2 accuracy 100.000% Prediction-Time 2104.51 prediction 2 label 2
-
->errs 0/3 accuracy 100.000% Prediction-Time 2072.34 prediction 1 label 1
-
->errs 0/4 accuracy 100.000% Prediction-Time 2068.76 prediction 0 label 0
-
->...
+```
+LoLa mode
+Generating keys in 1.8437561 seconds
+errs 0/1 accuracy 100.000% Prediction-Time 2156.22 prediction 7 label 7
+errs 0/2 accuracy 100.000% Prediction-Time 2070.28 prediction 2 label 2
+errs 0/3 accuracy 100.000% Prediction-Time 2041.65 prediction 1 label 1
+errs 0/4 accuracy 100.000% Prediction-Time 2027.33 prediction 0 label 0
+errs 0/5 accuracy 100.000% Prediction-Time 2024.99 prediction 4 label 4
+errs 0/6 accuracy 100.000% Prediction-Time 2023.44 prediction 1 label 1
+errs 0/7 accuracy 100.000% Prediction-Time 2020.09 prediction 4 label 4
+errs 0/8 accuracy 100.000% Prediction-Time 2017.58 prediction 9 label 9
+errs 0/9 accuracy 100.000% Prediction-Time 2013.89 prediction 5 label 5
+errs 0/10 accuracy 100.000% Prediction-Time 2014.07 prediction 9 label 9
+...
+```
 
 
 ### CifarCryptoNets
 This project implements [LoLa](https://arxiv.org/abs/1812.10659) on the CIFAR dataset. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2 so the expected performance is slightly better.
 To run issue the command *.\CifarCryptoNets.exe*. Note that this network is much slower and may take several minuts to complete running on a single example. The expected output is 
 
->Generating encryption keys 5/14/2019 12:43:02 PM
-
->Encryption keys ready 5/14/2019 12:43:08 PM
-
->Preparing
-
->-14.9947
-
->-13.1457
-
->12.7913
-
->8.6813
-
->12.8255
-
->-3.2621
-
->0.7135
-
->...
+```
+Generating encryption keys 6/4/2019 8:39:25 AM
+Encryption keys ready 6/4/2019 8:39:30 AM
+Preparing
+-14.9947
+-13.1457
+12.7913
+8.6813
+12.8255
+-3.2621
+0.7135
+4.8243
+-14.3768
+-7.1885
+Max computed value 0 (-∞)
+```
 
 ### Caltech101
 This project implements [LoLa](https://arxiv.org/abs/1812.10659) on the CalTech-101 dataset. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2 so the expected performance is slightly better.
 To run issue the command *.\Caltech101.exe*. The expected output is 
 
->Time for Prediction+Encryption: 230.9664
-
->errs 0/1 accuracy 100.000%  prediction 39 label 39
-
->Time for Prediction+Encryption: 173.0069
-
->errs 0/2 accuracy 100.000%  prediction 39 label 39
-
->Time for Prediction+Encryption: 162.9521
-
->errs 0/3 accuracy 100.000%  prediction 39 label 39
-
->Time for Prediction+Encryption: 167.9554
-
->errs 0/4 accuracy 100.000%  prediction 39 label 39
-
->...
-
-
+```
+Time for Prediction+Encryption: 234.295
+errs 0/1 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 187.465
+errs 0/2 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 156.2081
+errs 0/3 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 171.8693
+errs 0/4 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 171.842
+errs 0/5 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 171.8315
+errs 0/6 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 156.2133
+errs 0/7 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 156.2414
+errs 0/8 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 156.2196
+errs 0/9 accuracy 100.000%  prediction 39 label 39
+Time for Prediction+Encryption: 156.2462
+errs 0/10 accuracy 100.000%  prediction 39 label 39
+...
+```
 
 # Contributing
 
