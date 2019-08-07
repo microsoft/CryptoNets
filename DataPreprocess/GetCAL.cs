@@ -18,6 +18,15 @@ namespace DataPreprocess
     {
         public static void Run(string[] args)
         {
+            if (args.Length != 2)
+            {
+                Console.WriteLine("DataPreprocess CAL <catalog> <directory>");
+                Console.WriteLine();
+                Console.WriteLine("To test on a set of images, put the images in a directory and create a tab seperated catalog file with the first column being the name of the image file and a second column the index of its category.");
+                Console.WriteLine();
+                Console.WriteLine("To apply to the caltech dataset, download it from http://www.vision.caltech.edu/Image_Datasets/Caltech101/ and unzip it. Catalog files from the training and testing portions of the data exists here under the name cal_train.tsv and cal_test.tsv ");
+                return;
+            }
             var lines = File.ReadAllLines(args[0]);
             var res = lines.AsParallel().Select(l => _Run_failover(l, args[1]));
             foreach (var l in res)
@@ -88,7 +97,7 @@ namespace DataPreprocess
                 Columns = cols
             }).Load(imagesCatalog);
 
-            var pipeline = mlContext.Transforms.LoadImages(imageFolder:imagesFolder, columnPairs:(outputColumnName: "ImageReal", inputColumnName: "ImagePath"))
+            var pipeline = mlContext.Transforms.LoadImages(imageFolder:imagesFolder, outputColumnName: "ImageReal", inputColumnName: "ImagePath")
             .Append(mlContext.Transforms.ResizeImages(outputColumnName:"ImageObject", inputColumnName:"ImageReal", imageWidth: 227, imageHeight: 227))
             .Append(mlContext.Transforms.ExtractPixels("Pixels", "ImageObject"))
             .Append(mlContext.Transforms.DnnFeaturizeImage("FeaturizedImage", m => m.ModelSelector.AlexNet(mlContext, m.OutputColumn, m.InputColumn), "Pixels"));
@@ -97,8 +106,8 @@ namespace DataPreprocess
 
             var transformedData = pipeline.Fit(data).Transform(data);
 
-            var Features = transformedData.GetColumn<float[]>(mlContext, columnName:"FeaturizedImage").ToArray();
-            var Labels = transformedData.GetColumn<Int32>(mlContext, columnName: "Label").ToArray();
+            var Features = transformedData.GetColumn<float[]>(columnName:"FeaturizedImage").ToArray();
+            var Labels = transformedData.GetColumn<Int32>(columnName: "Label").ToArray();
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < Labels.Length; i++)
             {
