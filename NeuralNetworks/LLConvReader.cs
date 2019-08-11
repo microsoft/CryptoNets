@@ -136,7 +136,7 @@ namespace NeuralNetworks
                     for (int k = 0; k < f.Length; k++)
                     {
                         if (k == LabelColumn) continue;
-                        featuresArray[(k > LabelColumn) ? k - 1 : k] = double.Parse(f[k]);
+                        featuresArray[(k > LabelColumn) ? k - 1 : k] = double.Parse(f[k]) * NormalizationFactor;
                     }
                     Features = Vector<double>.Build.DenseOfArray(featuresArray);
                 }

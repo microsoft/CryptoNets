@@ -15,21 +15,18 @@ namespace DataPreprocess
     {
         static IEnumerable<string> BytesToString(byte[] bytes)
         {
-            StringBuilder sb = new StringBuilder();
-            for (var p = 0; p < bytes.Length; p++)
+            int imageSize = 3 * 32 * 32 + 1; // the +1 is due to the label column
+            for (int i = 0; i < bytes.Length; i += imageSize)
             {
-                if (p % 3073 == 0)
-                {
-                    if (p > 0) yield return sb.ToString();
-                    sb.Clear();
-                    sb.AppendFormat("{0}", bytes[p]);
-                }
-                else
-                {
-                    sb.AppendFormat("\t{0}", bytes[p]);
-                }
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("{0}", bytes[i]);
+                for (int color = 0; color < 3; color++)
+                    for (int y = 0; y < 32; y++)
+                        for (int x = 0; x < 32; x++)
+                            sb.AppendFormat("\t{0}", bytes[(i + 1) + y + 32 * (x + 32 * color)]);
+                yield return sb.ToString();
+
             }
-            yield return sb.ToString();
         }
 
         public static void Run(string[] args)
