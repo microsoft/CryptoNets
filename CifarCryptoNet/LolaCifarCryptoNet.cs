@@ -15,7 +15,7 @@ namespace CifarCryptoNet
             WeightsReader wr = new WeightsReader("CifarWeight.csv", "CifarBias.csv");
 
             Console.WriteLine("Generating encryption keys {0}", DateTime.Now);
-            var factory = new EncryptedSealBfvFactory(new ulong[] {67239937, 67502081, 67731457}, 16384, DecompositionBitCount: 60, GaloisDecompositionBitCount: 60, SmallModulusCount: 8);
+            var factory = new EncryptedSealBfvFactory(new ulong[] {67239937, 67502081, 67731457}, 16384, DecompositionBitCount: 60, GaloisDecompositionBitCount: 60, SmallModulusCount: 7);
             //var factory = new RawFactory(16 * 1024);
             Console.WriteLine("Encryption keys ready {0}", DateTime.Now);
             int numberOfRecords = 10000;
