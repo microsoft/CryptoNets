@@ -176,7 +176,7 @@ namespace NeuralNetworksTest
                 Lowerpadding = new int[] { 0, 1, 1 },
                 Stride = new int[] { 1000, 2, 2 },
                 MapCount = new int[] { 83, 1, 1 },
-                WeightsScale = 256000.0,
+                WeightsScale = 2560000.0,
                 Weights = (double[])wr.Weights[0],
                 Bias = (double[])wr.Biases[0],
                 Factory = factory
@@ -197,7 +197,7 @@ namespace NeuralNetworksTest
                 Lowerpadding = new int[] { 0, 2, 2 },
                 Stride = new int[] { 83, 2, 2 },
                 MapCount = new int[] { 163, 1, 1 },
-                WeightsScale = 256000.0,
+                WeightsScale = 2560000.0,
                 Weights = (double[])wr.Weights[1],
                 Bias = (double[])wr.Biases[1],
                 Factory = factory
@@ -216,7 +216,7 @@ namespace NeuralNetworksTest
                 KernelShape = new int[] { 163, 7, 7 },
                 Stride = new int[] { 1000, 7, 7 },
                 MapCount = new int[] { 10, 1, 1 },
-                WeightsScale = 256000.0,
+                WeightsScale = 2560000.0,
                 Weights = (double[])wr.Weights[2],
                 Bias = (double[])wr.Biases[2],
                 Factory = factory
