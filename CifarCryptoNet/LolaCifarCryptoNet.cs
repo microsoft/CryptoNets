@@ -15,12 +15,11 @@ namespace CifarCryptoNet
             WeightsReader wr = new WeightsReader("CifarWeight.csv", "CifarBias.csv");
 
             Console.WriteLine("Generating encryption keys {0}", DateTime.Now);
-            //var factory = new EncryptedSealBfvFactory(new ulong[] {2148728833,2148794369,2149810177}, 16384, DecompositionBitCount: 60, GaloisDecompositionBitCount: 60, SmallModulusCount: 7);
-            var factory = new RawFactory(16 * 1024);
-            //var factory = new RawFactory(1);
+            var factory = new EncryptedSealBfvFactory(new ulong[] {67239937, 67502081, 67731457}, 16384, DecompositionBitCount: 60, GaloisDecompositionBitCount: 60, SmallModulusCount: 8);
+            //var factory = new RawFactory(16 * 1024);
             Console.WriteLine("Encryption keys ready {0}", DateTime.Now);
             int numberOfRecords = 10000;
-
+            bool verbose = true;
 
             string fileName = "cifar-test.tsv";
             var readerLayer = new LLConvReader
@@ -33,15 +32,18 @@ namespace CifarCryptoNet
                 Lowerpadding = new int[] { 0, 1, 1 },
                 Stride = new int[] { 1000, 2, 2 },
                 NormalizationFactor = 1.0 / 256.0,
-                Scale = 8.0
+                Scale = 8.0,
+                Verbose = verbose
             };
 
 
-            var encryptLayer = new EncryptLayer() { Source = readerLayer, Factory = factory };
+            var EncryptLayer = new EncryptLayer() { Source = readerLayer, Factory = factory };
+            var StartTimingLayer = new TimingLayer() { Source = EncryptLayer, StartCounters = new string[] { "Inference-Time" } };
 
-            var convLayer1 = new LLPoolLayer()
+
+            var ConvLayer1 = new LLPoolLayer()
             {
-                Source = encryptLayer,
+                Source = StartTimingLayer,
                 InputShape = new int[] { 3, 32, 32 },
                 KernelShape = new int[] { 3, 8, 8 },
                 Upperpadding = new int[] { 0, 1, 1 },
@@ -50,16 +52,25 @@ namespace CifarCryptoNet
                 MapCount = new int[] { 83, 1, 1 },
                 WeightsScale = 128.0,
                 Weights = (double[])wr.Weights[0],
-                Bias = (double[])wr.Biases[0]
+                Bias = (double[])wr.Biases[0],
+                Verbose = verbose
             };
 
-            var VectorizeLayer2 = new LLVectorizeLayer() { Source = convLayer1 };
+            var VectorizeLayer2 = new LLVectorizeLayer()
+            {
+                Source = ConvLayer1,
+                Verbose = verbose
+            };
 
-            var activationLayer3 = new SquareActivation() { Source = VectorizeLayer2 };
+            var ActivationLayer3 = new SquareActivation()
+            {
+                Source = VectorizeLayer2,
+                Verbose = verbose
+            };
 
 
 
-            var convEngine = new ConvolutionEngine()
+            var ConvEngine = new ConvolutionEngine()
             {
                 InputShape = new int[] { 83, 14, 14 },
                 KernelShape = new int[] { 83, 6, 6 },
@@ -69,35 +80,43 @@ namespace CifarCryptoNet
                 MapCount = new int[] { 163, 1, 1 }
             };
 
-            var denseLayer4 = new LLDenseLayer
+            var DenseLayer4 = new LLDenseLayer
             {
-                Source = activationLayer3,
+                Source = ActivationLayer3,
                 WeightsScale = 768.0,
-                Weights = convEngine.GetDenseWeights((double[])wr.Weights[1]),
-                Bias = convEngine.GetDenseBias((double[])wr.Biases[1]),
+                Weights = ConvEngine.GetDenseWeights((double[])wr.Weights[1]),
+                Bias = ConvEngine.GetDenseBias((double[])wr.Biases[1]),
                 InputFormat = EVectorFormat.dense,
-                ForceDenseFormat = true
+                ForceDenseFormat = true,
+                Verbose = verbose
             };
 
 
-            var activationLayer5 = new SquareActivation() { Source = denseLayer4 };
-
-            var denseLayer6 = new LLDenseLayer()
+            var ActivationLayer5 = new SquareActivation()
             {
-                Source = activationLayer5,
+                Source = DenseLayer4,
+                Verbose = verbose
+            };
+
+            var DenseLayer6 = new LLDenseLayer()
+            {
+                Source = ActivationLayer5,
                 Weights = (double[])wr.Weights[2],
                 Bias = (double[])wr.Biases[2],
                 WeightsScale = 512.0,
-                InputFormat = EVectorFormat.dense
+                InputFormat = EVectorFormat.dense,
+                Verbose = verbose
             };
 
+            var StopTimingLayer = new TimingLayer() { Source = DenseLayer6, StopCounters = new string[] { "Inference-Time" } };
 
 
-            var network = denseLayer6;
+            var network = StopTimingLayer;
             Console.WriteLine("Preparing");
             network.PrepareNetwork();
             int count = 0;
             int errs = 0;
+            int batchSize = 1;
             while (count < numberOfRecords)
             {
                 using (var m = network.GetNext())
@@ -111,8 +130,8 @@ namespace CifarCryptoNet
                         }
                         if (pred != readerLayer.Labels[0]) errs++;
                         count++;
-                        if (count % 100 == 0)
-                            Console.WriteLine("errs {0}/{1} accuracy {2:0.000}% prediction {3} label {4} bits {5}", errs, count, 100 - (100.0 * errs / (count)), pred, readerLayer.Labels[0], Math.Log(RawMatrix.Max) / Math.Log(2));
+                        if (count % batchSize == 0)
+                            Console.WriteLine("errs {0}/{1} accuracy {2:0.000}% prediction {3} label {4} {5}", errs, count, 100 - (100.0 * errs / (count)), pred, readerLayer.Labels[0], TimingLayer.GetStats());
 
                     }, factory);
             }
