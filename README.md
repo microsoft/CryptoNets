@@ -10,7 +10,7 @@ Neural-Network while the data remains encrypted throughout the process and final
 the service provider does not learn anything about the data that was used, the prediction that was made or any intermediate result since everything is encrypted
 throughout the process.
 
-This project uses the Simple Encrypted Arithmetic Library [SEAL](http://sealcrypto.org) version 3.2.1 implementation of Homomorphic Encryption developed in [Microsoft Research](https://www.microsoft.com/en-us/research/).
+This project uses the [Microsoft SEAL](http://sealcrypto.org) version 3.2 implementation of Homomorphic Encryption developed in [Microsoft Research](https://www.microsoft.com/en-us/research/).
 The project is made of three components:
 1. A wrapper for Homomorphic Encryption that allow working with matrices and vectors while hiding much of the underlying crypto.
 2. Implementation of main Neural-Network layers using the wrapper.
