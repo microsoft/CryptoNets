@@ -134,27 +134,27 @@ namespace NeuralNetworksTest
         public void TestLargeCifar()
         {
             var factory = new RawFactory(16 * 1024);
-            WeightsReader wr = new WeightsReader("large_weights.csv", "large_bias.csv");
+            WeightsReader wr = new WeightsReader("CifarWeight.csv", "CifarBias.csv");
 
-            //var l = new List<Tuple<int, int, double>>
-            //{
-            //    new Tuple<int, int, double>(0, 0, 1),
-            //    new Tuple<int, int, double>(0, 1, 1),
-            //    new Tuple<int, int, double>(0, 32*32, 1),
-            //};
-            //var m = factory.GetEncryptedMatrix(Matrix<double>.Build.SparseOfIndexed(1, 3 * 32 * 32, l), EMatrixFormat.ColumnMajor, 1);
-            //var inp = new DummyLayer()
-            //{
-            //    Data = m,
-            //    Source = null,
-            //    Factory = factory
-            //};
+            var l = new List<Tuple<int, int, double>>
+            {
+                new Tuple<int, int, double>(0, 0, 1),
+                //new Tuple<int, int, double>(0, 1, 1),
+                //new Tuple<int, int, double>(0, 32*32, 1),
+            };
+            var m = factory.GetEncryptedMatrix(Matrix<double>.Build.SparseOfIndexed(1, 83 * 14 * 14, l), EMatrixFormat.ColumnMajor, 1);
+            var inp = new DummyLayer()
+            {
+                Data = m,
+                Source = null,
+                Factory = factory
+            };
             var readerLayer = new BatchReader()
             {
                 FileName = "cifar-test.tsv",
 
-                NormalizationFactor = 1.0 / 255.0,
-                Scale = 255.0,
+                NormalizationFactor = 0.0 / 256.0,
+                Scale = 16.0,
                 MaxSlots = 1,
                 SparseFormat = false
             };
@@ -192,11 +192,11 @@ namespace NeuralNetworksTest
             {
                 Source = activation2,
                 InputShape = new int[] { 83, 14, 14 },
-                KernelShape = new int[] { 83, 6, 6 },
-                Upperpadding = new int[] { 0, 2, 2 },
-                Lowerpadding = new int[] { 0, 2, 2 },
+                KernelShape = new int[] { 83, 10, 10 },
+                Upperpadding = new int[] { 0, 4, 4 },
+                Lowerpadding = new int[] { 0, 4, 4 },
                 Stride = new int[] { 83, 2, 2 },
-                MapCount = new int[] { 163, 1, 1 },
+                MapCount = new int[] { 167, 1, 1 },
                 WeightsScale = 2560000.0,
                 Weights = (double[])wr.Weights[1],
                 Bias = (double[])wr.Biases[1],
@@ -212,8 +212,8 @@ namespace NeuralNetworksTest
             var convLayer5 = new PoolLayer()
             {
                 Source = activation4,
-                InputShape = new int[] { 163, 7, 7 },
-                KernelShape = new int[] { 163, 7, 7 },
+                InputShape = new int[] { 167, 7, 7 },
+                KernelShape = new int[] { 167, 7, 7 },
                 Stride = new int[] { 1000, 7, 7 },
                 MapCount = new int[] { 10, 1, 1 },
                 WeightsScale = 2560000.0,

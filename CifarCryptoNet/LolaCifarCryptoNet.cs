@@ -13,12 +13,14 @@ namespace CifarCryptoNet
         public static void Main(string[] args)
         {
             WeightsReader wr = new WeightsReader("CifarWeight.csv", "CifarBias.csv");
+            // current network has has the potential of 76.76% accuracy
+            // with current parameters its accuracy is 74.32% and uses 69.67 bits
 
             Console.WriteLine("Generating encryption keys {0}", DateTime.Now);
-            var factory = new EncryptedSealBfvFactory(new ulong[] {67239937, 67502081, 67731457}, 16384, DecompositionBitCount: 60, GaloisDecompositionBitCount: 60, SmallModulusCount: 7);
+            var factory = new EncryptedSealBfvFactory(new ulong[] { 8590163969, 8590458881 }, 16384, DecompositionBitCount: 60, GaloisDecompositionBitCount: 60, SmallModulusCount: 7);
             //var factory = new RawFactory(16 * 1024);
             Console.WriteLine("Encryption keys ready {0}", DateTime.Now);
-            int numberOfRecords = 10000;
+            int numberOfRecords = 10;
             bool verbose = true;
 
             string fileName = "cifar-test.tsv";
@@ -73,17 +75,17 @@ namespace CifarCryptoNet
             var ConvEngine = new ConvolutionEngine()
             {
                 InputShape = new int[] { 83, 14, 14 },
-                KernelShape = new int[] { 83, 6, 6 },
-                Upperpadding = new int[] { 0, 2, 2 },
-                Lowerpadding = new int[] { 0, 2, 2 },
+                KernelShape = new int[] { 83, 10, 10 },
+                Upperpadding = new int[] { 0, 4, 4 },
+                Lowerpadding = new int[] { 0, 4, 4 },
                 Stride = new int[] { 83, 2, 2 },
-                MapCount = new int[] { 163, 1, 1 }
+                MapCount = new int[] { 130, 1, 1 }
             };
 
             var DenseLayer4 = new LLDenseLayer
             {
                 Source = ActivationLayer3,
-                WeightsScale = 768.0,
+                WeightsScale = 128.0,
                 Weights = ConvEngine.GetDenseWeights((double[])wr.Weights[1]),
                 Bias = ConvEngine.GetDenseBias((double[])wr.Biases[1]),
                 InputFormat = EVectorFormat.dense,
@@ -103,7 +105,7 @@ namespace CifarCryptoNet
                 Source = ActivationLayer5,
                 Weights = (double[])wr.Weights[2],
                 Bias = (double[])wr.Biases[2],
-                WeightsScale = 512.0,
+                WeightsScale = 256.0,
                 InputFormat = EVectorFormat.dense,
                 Verbose = verbose
             };
