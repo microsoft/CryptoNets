@@ -14,14 +14,14 @@ namespace CifarCryptoNet
         {
             WeightsReader wr = new WeightsReader("CifarWeight.csv", "CifarBias.csv");
             // current network has has the potential of 76.76% accuracy
-            // with current parameters its accuracy is 74.32% and uses 69.67 bits
+            // with current parameters its accuracy is 75.01% and uses 68.25 bits
 
             Console.WriteLine("Generating encryption keys {0}", DateTime.Now);
             var factory = new EncryptedSealBfvFactory(new ulong[] { 8590163969, 8590458881 }, 16384, DecompositionBitCount: 60, GaloisDecompositionBitCount: 60, SmallModulusCount: 7);
             //var factory = new RawFactory(16 * 1024);
             Console.WriteLine("Encryption keys ready {0}", DateTime.Now);
             int numberOfRecords = 10;
-            bool verbose = true;
+            bool verbose = false;
 
             string fileName = "cifar-test.tsv";
             var readerLayer = new LLConvReader
@@ -52,7 +52,7 @@ namespace CifarCryptoNet
                 Lowerpadding = new int[] { 0, 1, 1 },
                 Stride = new int[] { 1000, 2, 2 },
                 MapCount = new int[] { 83, 1, 1 },
-                WeightsScale = 128.0,
+                WeightsScale = 100.0,
                 Weights = (double[])wr.Weights[0],
                 Bias = (double[])wr.Biases[0],
                 Verbose = verbose
