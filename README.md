@@ -133,24 +133,41 @@ errs 0/10 accuracy 100.000% Prediction-Time 2014.07 prediction 9 label 9
 
 
 ### CifarCryptoNets
-This project implements [LoLa](https://arxiv.org/abs/1812.10659) on the CIFAR dataset. Note that the paper uses SEAL 2.3 while here we use SEAL 3.2, so the expected performance is slightly better.
-To run, issue the command *.\CifarCryptoNets.exe*. Note that this network is much slower and may take several minutes to complete running on a single example. The expected output is: 
+This project implements [LoLa](https://arxiv.org/abs/1812.10659) on the CIFAR dataset. The version implemented here defers from the one in the paper in several ways: 
+- The version here uses SEAL 3.2 whereas the paper version uses SEAL 2.3
+- The network here is slightly different. It has better accuracy of 76.31% and runs at ~750 seconds on an Azure VM B8ms
 
+To run, issue the command *.\CifarCryptoNets.exe* with the following parameters:
+
+> -v, --verbose    (Default: false) Set output to verbose messages. In the verbose mode more information is presented
+
+> -e, --encrypt    (Default: false) Use encryption. In encrypted mode the network operates on encrypted data, otherwise it operates on plain data
+
+For example, the command *.\CifarCryptoNets -e* will generate the following output:
 ```
-Generating encryption keys 6/4/2019 8:39:25 AM
-Encryption keys ready 6/4/2019 8:39:30 AM
+Generating encryption keys 8/27/2019 7:10:24 AM
+Encryption keys ready 8/27/2019 7:10:31 AM
 Preparing
--14.9947
--13.1457
-12.7913
-8.6813
-12.8255
--3.2621
-0.7135
-4.8243
--14.3768
--7.1885
-Max computed value 0 (-∞)
+errs 0/1 accuracy 100.000% prediction 3 label 3 Inference-Time 745962.92ms
+errs 0/2 accuracy 100.000% prediction 8 label 8 Inference-Time 747487.20ms
+errs 0/3 accuracy 100.000% prediction 8 label 8 Inference-Time 748396.12ms
+errs 0/4 accuracy 100.000% prediction 0 label 0 Inference-Time 749291.59ms
+errs 0/5 accuracy 100.000% prediction 6 label 6 Inference-Time 749788.54ms
+errs 0/6 accuracy 100.000% prediction 6 label 6 Inference-Time 752015.41ms
+errs 0/7 accuracy 100.000% prediction 1 label 1 Inference-Time 752773.61ms
+errs 0/8 accuracy 100.000% prediction 6 label 6 Inference-Time 753000.47ms
+errs 0/9 accuracy 100.000% prediction 3 label 3 Inference-Time 753793.26ms
+errs 0/10 accuracy 100.000% prediction 1 label 1 Inference-Time 753874.34ms
+errs 0/11 accuracy 100.000% prediction 0 label 0 Inference-Time 754014.56ms
+errs 0/12 accuracy 100.000% prediction 9 label 9 Inference-Time 754126.20ms
+errs 1/13 accuracy 92.308% prediction 3 label 5 Inference-Time 754119.69ms
+errs 1/14 accuracy 92.857% prediction 7 label 7 Inference-Time 754221.25ms
+errs 1/15 accuracy 93.333% prediction 9 label 9 Inference-Time 754241.65ms
+errs 1/16 accuracy 93.750% prediction 8 label 8 Inference-Time 754196.86ms
+errs 1/17 accuracy 94.118% prediction 5 label 5 Inference-Time 754118.79ms
+errs 1/18 accuracy 94.444% prediction 7 label 7 Inference-Time 754142.30ms
+errs 1/19 accuracy 94.737% prediction 8 label 8 Inference-Time 754125.49ms
+errs 1/20 accuracy 95.000% prediction 6 label 6 Inference-Time 754131.44ms
 ```
 
 ### Caltech101
