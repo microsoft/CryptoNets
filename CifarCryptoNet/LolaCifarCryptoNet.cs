@@ -154,7 +154,7 @@ namespace CifarCryptoNet
                             if (options.Encrypt)
                                 Console.WriteLine();
                             else
-                                Console.WriteLine(" {0}bits", Math.Log(RawMatrix.Max) / Math.Log(2));
+                                Console.WriteLine(" 2^{0} largest-value", Math.Log(RawMatrix.Max) / Math.Log(2));
 
                         }
 
@@ -164,7 +164,7 @@ namespace CifarCryptoNet
             Console.WriteLine("errs {0}/{1} accuracy {2:0.000}%", errs, count, 100 - (100.0 * errs / (count)));
             network.DisposeNetwork();
             if (!options.Encrypt)
-                Console.WriteLine("Max computed value {0} ({1})", RawMatrix.Max, Math.Log(RawMatrix.Max) / Math.Log(2));
+                Console.WriteLine("Max computed value 2^{1}", Math.Log(RawMatrix.Max) / Math.Log(2));
         }
     }
 }

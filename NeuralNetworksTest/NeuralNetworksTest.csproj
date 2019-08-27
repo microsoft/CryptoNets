@@ -79,7 +79,6 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CifarTests.cs" />
     <Compile Include="FakeLayer.cs" />
     <Compile Include="LayersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,12 +86,6 @@
     <Compile Include="TestNetwork.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="cifar_test_bias.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="cifar_test_weights.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
