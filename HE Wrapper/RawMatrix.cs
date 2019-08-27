@@ -26,6 +26,7 @@ namespace HEWrapper
             Format = format;
             this.m = (m * scale).PointwiseRound();
             this.BlockSize = BlockSize;
+            Max = Math.Max(Max, m.Enumerate().Max(x => (x < 0) ? -x : x));
         }
 
         private RawMatrix() { }
@@ -46,6 +47,8 @@ namespace HEWrapper
                 m = DelimitedReader.Read<double>(str),
                 BlockSize = ulong.Parse(str.ReadLine())
             };
+            Max = Math.Max(Max, mtx.m.Enumerate().Max(x => (x < 0) ? -x : x));
+
             return mtx;
         }
         public void Dispose()
@@ -117,6 +120,7 @@ namespace HEWrapper
             if (columnNumber >= m.ColumnCount) throw new Exception("Column does not exist");
             if (Format != EMatrixFormat.ColumnMajor) throw new Exception("Columns can be set only from a column major matrix");
             m.SetColumn(columnNumber, (Vector<double>)vector.Data);
+            Max = Math.Max(Max, m.Enumerate().Max(x => (x < 0) ? -x : x));
         }
 
 
