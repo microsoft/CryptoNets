@@ -37,7 +37,7 @@ The project is designed to be built using Visual-Studio 2017 and was tested in t
 
 To install the project follow the following steps
 ### 1. Install SEAL
-This project depends on SEAL version 3.2. Download this version of SEAL from [http://sealcrypto.org]. In order to obtain best performance introduce the following change to the code of SEAL before compiling:
+This project depends on SEAL version 3.2. Download this version of SEAL from [http://sealcrypto.org]. Note that CryptoNets does not support SEAL 3.3 which uses a different API. Instead, you can checkout version 3.2 using the command `git checkout 3.2.2`. In order to obtain best performance introduce the following change to the code of SEAL before compiling:
 
 Open SEAL/native/src/seal/evaluator.cpp and in the are_same_scale function change the the arguments to be: const T &value1, const S &value2.
 
