@@ -1,3 +1,5 @@
+## Description
+
 CryptoNets is a demonstration of the use of Neural-Networks over data encrypted with [Homomorphic Encryption](https://www.cs.cmu.edu/~odonnell/hits09/gentry-homomorphic-encryption.pdf).
 Homomorphic Encryptions allow performing operations such as addition and multiplication over data while it is encrypted. 
 Therefore, it allows keeping data private while outsourcing computation (see [here](http://homomorphicencryption.org/) and [here](https://www.microsoft.com/en-us/research/project/homomorphic-encryption/) for more about Homomorphic Encryptions and its applications).
